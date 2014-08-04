@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	_ "io/ioutil"
 	"os"
 	"scratchgo"
 	"strings"
@@ -49,19 +48,6 @@ func main() {
 			fmt.Println("unknown command.\n  send or broadcast")
 		}
 	}
-	// for {
-	// 	data := make([]byte, 255)
-	// 	_, err := conn.Read(data)
-	// 	if err != nil {
-	// 		fmt.Println(err)
-	// 	}
-	// 	fmt.Println(data)
-	// }
-	// data, err := ioutil.ReadAll(conn)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-	// fmt.Println(data)
 	os.Exit(0)
 }
 
