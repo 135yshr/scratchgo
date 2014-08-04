@@ -1,4 +1,4 @@
-package scratch
+package scratchgo
 
 import (
 	"bytes"

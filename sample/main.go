@@ -5,12 +5,12 @@ import (
 	"fmt"
 	_ "io/ioutil"
 	"os"
-	"scratchgo/scratch"
+	"scratchgo"
 	"strings"
 )
 
 func main() {
-	conn, err := scratch.NewDefaultConnect()
+	conn, err := scratchgo.NewDefaultConnect()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
