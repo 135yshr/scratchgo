@@ -1,9 +1,8 @@
 package scratchgo
 
 import (
-	"fmt"
 	"regexp"
-	"strconv"
+	_ "strconv"
 	"strings"
 )
 
@@ -15,34 +14,32 @@ var (
 )
 
 type Message struct {
-	Type string // sensor-update | broadcast
-	m    map[string]interface{}
+	Type      string // sensor-update | broadcast
+	Variables map[string]string
 }
 
-func ParseMessage(message string) (*Message, error) {
-	var m map[string]interface{}
+func ParseMessage(message string) *Message {
 	type_name := strings.Split(message, " ")[0]
 	message = message[len(type_name):]
 
+	var parse func(string) map[string]string
 	if type_name == "broadcast" {
-		m = parseBroadcast(message)
+		parse = parseBroadcast
 	} else if type_name == "sensor-update" {
-		m = parseSensorupdate(message)
-	} else {
-		return nil, fmt.Errorf("un supported type name.[%s]", type_name)
+		parse = parseSensorupdate
 	}
 
-	return &Message{type_name, m}, nil
+	return &Message{type_name, parse(message)}
 }
 
-func parseBroadcast(message string) map[string]interface{} {
-	key := trim(message, trimValues)
-	return map[string]interface{}{key: nil}
+func parseBroadcast(message string) map[string]string {
+	cmd := trim(message, trimValues)
+	return map[string]string{"command": cmd}
 }
 
-func parseSensorupdate(message string) map[string]interface{} {
+func parseSensorupdate(message string) map[string]string {
+	ret := make(map[string]string)
 	words := regexp.MustCompile(regexParam).FindAllString(message, -1)
-	ret := make(map[string]interface{})
 
 	var key string
 	for index, word := range words {
@@ -52,15 +49,7 @@ func parseSensorupdate(message string) map[string]interface{} {
 			continue
 		}
 
-		if value, err := strconv.Atoi(word); err == nil {
-			ret[key] = value
-		} else if value, err := strconv.ParseFloat(word, 32); err == nil {
-			ret[key] = value
-		} else if value, err := strconv.ParseBool(word); err == nil {
-			ret[key] = value
-		} else {
-			ret[key] = word
-		}
+		ret[key] = word
 	}
 	return ret
 }
@@ -74,32 +63,11 @@ func trim(text string, trm []string) string {
 }
 
 func (self *Message) GetNames() []string {
-	ret := make([]string, len(self.m))
+	ret := make([]string, len(self.Variables))
 	var index int = 0
-	for k, _ := range self.m {
+	for k, _ := range self.Variables {
 		ret[index] = k
 		index++
 	}
 	return ret
-}
-
-func (self *Message) Len() int {
-	return len(self.m)
-}
-
-func (self *Message) Get(key string) interface{} {
-	return self.m[key]
-}
-
-func (self *Message) Set(key string, value interface{}) {
-	self.m[key] = value
-}
-
-func isScratchCommand(t string) bool {
-	for _, name := range types {
-		if t == name {
-			return true
-		}
-	}
-	return false
 }
