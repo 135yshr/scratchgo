@@ -12,8 +12,7 @@ func TestMessge(t *testing.T) {
 				msg := ParseMessage(`broadcast "sample"`)
 				Expect(msg).To(Exist)
 				Expect(msg.Type).To(Equal, "broadcast")
-				Expect(msg.GetNames()).To(Equal, []string{"sample"})
-				Expect(msg.Variables["sample"]).To(Equal, "")
+				Expect(msg.Variables["command"]).To(Equal, "sample")
 			})
 			It("type of sensor-update", func() {
 				msg := ParseMessage(`sensor-update "name1" 1`)

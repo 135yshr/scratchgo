@@ -33,8 +33,8 @@ func ParseMessage(message string) *Message {
 }
 
 func parseBroadcast(message string) map[string]string {
-	key := trim(message, trimValues)
-	return map[string]string{key: ""}
+	cmd := trim(message, trimValues)
+	return map[string]string{"command": cmd}
 }
 
 func parseSensorupdate(message string) map[string]string {
