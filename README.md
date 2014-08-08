@@ -1,13 +1,19 @@
 # Scratchgo
 _The Remote Sensors Protocol can be used to connect golang to Scratch._
 
-# Install Go lang
+## Install Go lang
 Refer to [golang.org](http://golang.org/doc/install)
 
-# Enable Remote Sensor Connections
+## Install scratchgo
+
+```bash
+go get github.com/135yshr/scratchgo
+```
+
+## Enable Remote Sensor Connections
 In your Scratch project, right click on one of the sensor tiles and click "enable remote sensor connections".
 
-# Sample client program
+## Sample client program
 ``` go
 package main
 
@@ -33,7 +39,7 @@ func main() {
 
 	// receive the updated value
 	// sensor-update - map[key:value]
-	// broadcast - map[key:nil]
+	// broadcast - map["command":message]
 	msg, err := conn.Recv()
 	if err != nil {
 		fmt.Println(err)
