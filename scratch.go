@@ -56,7 +56,7 @@ func (self *RspConn) Recv() (*Message, error) {
 		return nil, err
 	}
 
-	return ParseMessage(string(data))
+	return ParseMessage(string(data)), nil
 }
 
 func size_to_bytes(size int) []byte {
