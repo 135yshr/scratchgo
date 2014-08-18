@@ -22,18 +22,18 @@ func TestScaratchub(t *testing.T) {
 	Describe(t, "Scratchub TestCase", func() {
 		Context("create hub", func() {
 			It("create new hub.", func() {
-				actual := NewHub([]Port{ErrorNotExistPort{}})
+				actual := NewScratchub([]Port{ErrorNotExistPort{}})
 				Expect(actual).To(Exist)
 			})
 		})
 		Context("run func Action.", func() {
 			It("error not exist", func() {
-				actual := NewHub([]Port{ErrorNotExistPort{}})
+				actual := NewScratchub([]Port{ErrorNotExistPort{}})
 				err := actual.Action(&Message{})
 				Expect(err).To(NotExist)
 			})
 			It("error exist", func() {
-				actual := NewHub([]Port{ErrorExistPort{}, ErrorNotExistPort{}})
+				actual := NewScratchub([]Port{ErrorExistPort{}, ErrorNotExistPort{}})
 				err := actual.Action(&Message{})
 				Expect(err).To(Exist)
 			})
