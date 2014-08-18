@@ -4,15 +4,15 @@ type Port interface {
 	Action(*Message) error
 }
 
-type Scratchub struct {
+type Hub struct {
 	Ports []Port
 }
 
-func NewScratchub(ports []Port) *Scratchub {
-	return &Scratchub{Ports: ports}
+func Newhub(ports []Port) *Hub {
+	return &Hub{Ports: ports}
 }
 
-func (self *Scratchub) Action(msg *Message) error {
+func (self *Hub) Action(msg *Message) error {
 	for _, port := range self.Ports {
 		if err := port.Action(msg); err != nil {
 			return err
