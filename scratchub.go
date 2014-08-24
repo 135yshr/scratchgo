@@ -8,7 +8,7 @@ type Hub struct {
 	Ports []Port
 }
 
-func Newhub(ports []Port) *Hub {
+func NewHub(ports []Port) *Hub {
 	return &Hub{Ports: ports}
 }
 
