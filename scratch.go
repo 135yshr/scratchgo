@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"fmt"
 	"net"
+	"strings"
 )
 
 type RspConn struct {
@@ -23,8 +24,26 @@ func NewConnect(host string, port int) (*RspConn, error) {
 	return &RspConn{conn}, nil
 }
 
-func (self *RspConn) SensorUpdate(name string, value string) error {
-	return self.send(fmt.Sprintf(`sensor-update "%s" "%s"`, name, value))
+func (self *RspConn) SensorUpdate(value map[string]interface{}) error {
+	var data string
+	for k, v := range value {
+		switch v := v.(type) {
+		case int32, int64:
+			data += fmt.Sprintf(`"%s" %d`, k, v)
+		case float32, float64:
+			data += fmt.Sprintf(`"%s" %f`, k, v)
+		case bool:
+			data += fmt.Sprintf(`"%s" %t`, k, v)
+		case string:
+			if strings.Index(v, " ") > 0 {
+				v = fmt.Sprintf(`"%s"`, v)
+			}
+			data += fmt.Sprintf(`"%s" %s`, k, v)
+		default:
+			return fmt.Errorf("not support type [%v]", v)
+		}
+	}
+	return self.send(fmt.Sprintf("sensor-update %s", data))
 }
 
 func (self *RspConn) BroadCast(value string) error {
