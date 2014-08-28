@@ -2,6 +2,7 @@ package scratchgo
 
 import (
 	. "github.com/r7kamura/gospel"
+	"sort"
 	"testing"
 )
 
@@ -45,7 +46,9 @@ func TestMessge(t *testing.T) {
 				msg := ParseMessage(`sensor-update "name1" 1 "name2" 1.2 "name3" true "name4" "aaa bbb"`)
 				Expect(msg).To(Exist)
 				Expect(msg.Type).To(Equal, "sensor-update")
-				Expect(msg.GetNames()).To(Equal, []string{"name1", "name2", "name3", "name4"})
+				names := msg.GetNames()
+				sort.Strings(names)
+				Expect(names).To(Equal, []string{"name1", "name2", "name3", "name4"})
 				Expect(msg.Variables["name1"]).To(Equal, "1")
 				Expect(msg.Variables["name3"]).To(Equal, "true")
 				Expect(msg.Variables["name4"]).To(Equal, "aaa bbb")
