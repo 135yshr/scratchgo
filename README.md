@@ -13,6 +13,10 @@ go get github.com/135yshr/scratchgo
 ## Enable Remote Sensor Connections
 In your Scratch project, right click on one of the sensor tiles and click "enable remote sensor connections".
 
+## New Functions
+### Scratchub
+scratchub is a class that was to be manipulated from Scratch by connecting multiple external devices. (such as Sphero and Hue)
+
 ## Sample client program
 ``` go
 package main
@@ -47,3 +51,7 @@ func main() {
 	fmt.Println(*msg) // {sensor-update map[scratch_value:1]}
 }
 ```
+
+# Revistion History
+## beta 2.0
+ * added a new function scratchub
