@@ -5,7 +5,6 @@ import (
 	"encoding/binary"
 	"fmt"
 	"net"
-	"strings"
 )
 
 type RspConn struct {
@@ -24,12 +23,12 @@ func NewConnect(host string, port int) (*RspConn, error) {
 	return &RspConn{conn}, nil
 }
 
-func (self *RspConn) SensorUpdate(name string, value []string) error {
-	return self.send(fmt.Sprintf(`sensor-update "%s" %q`, name, strings.Join(value, " ")))
+func (self *RspConn) SensorUpdate(name string, value string) error {
+	return self.send(fmt.Sprintf(`sensor-update "%s" "%s"`, name, value))
 }
 
-func (self *RspConn) BroadCast(value []string) error {
-	return self.send(fmt.Sprintf("broadcast %q", strings.Join(value, " ")))
+func (self *RspConn) BroadCast(value string) error {
+	return self.send(fmt.Sprintf("broadcast %s", value))
 }
 
 func (self *RspConn) send(cmd string) error {
