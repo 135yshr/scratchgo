@@ -53,5 +53,7 @@ func main() {
 ```
 
 # Revistion History
+## release 1.0
+ * Fixed a problem that can not be sent two or more of the parameters.
 ## beta 2.0
  * added a new function scratchub

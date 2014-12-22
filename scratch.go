@@ -29,16 +29,16 @@ func (self *RspConn) SensorUpdate(value map[string]interface{}) error {
 	for k, v := range value {
 		switch v := v.(type) {
 		case int32, int64:
-			data += fmt.Sprintf(`"%s" %d`, k, v)
+			data += fmt.Sprintf(` "%s" %d`, k, v)
 		case float32, float64:
-			data += fmt.Sprintf(`"%s" %f`, k, v)
+			data += fmt.Sprintf(` "%s" %f`, k, v)
 		case bool:
-			data += fmt.Sprintf(`"%s" %t`, k, v)
+			data += fmt.Sprintf(` "%s" %t`, k, v)
 		case string:
 			if strings.Index(v, " ") > 0 {
-				v = fmt.Sprintf(`"%s"`, v)
+				v = fmt.Sprintf(` "%s"`, v)
 			}
-			data += fmt.Sprintf(`"%s" %s`, k, v)
+			data += fmt.Sprintf(` "%s" %s`, k, v)
 		default:
 			return fmt.Errorf("not support type [%v]", v)
 		}
