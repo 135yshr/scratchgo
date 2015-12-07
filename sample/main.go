@@ -4,8 +4,9 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"scratchgo"
 	"strings"
+
+	"github.com/135yshr/scratchgo"
 )
 
 func main() {
