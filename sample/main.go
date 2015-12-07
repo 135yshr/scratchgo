@@ -38,10 +38,10 @@ func main() {
 
 		switch strings.ToLower(buff[0]) {
 		case "send":
-			err = conn.SensorUpdate(buff[1], buff[2:])
+			err = conn.SensorUpdate(map[string]interface{}{buff[1]: buff[2]})
 			exitOnErr("update sensor", err)
 		case "broadcast":
-			err = conn.BroadCast(buff[1:])
+			err = conn.BroadCast(buff[1])
 			exitOnErr("broadcast message", err)
 		case "exit", "quit":
 			os.Exit(0)
