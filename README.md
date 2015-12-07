@@ -53,6 +53,9 @@ func main() {
 ```
 
 # Revistion History
+## release 1.1
+ * Fixed a bug of the sample program
+ 
 ## release 1.0
  * Fixed a problem that can not be sent two or more of the parameters.
 
